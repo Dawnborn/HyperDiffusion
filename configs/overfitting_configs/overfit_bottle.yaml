@@ -4,7 +4,7 @@ in_out: True
 augment_on_the_fly: False
 mesh_jitter: False
 split_root: "./data/02691156"
-dataset_folder: "./data/ShapeNet_processed/02691156"
+dataset_folder: "./data/ShapeNet_processed/02876657"
 wandb_dir: .
 batch_size: 2048
 lr: 1e-2

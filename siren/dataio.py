@@ -18,6 +18,7 @@ from PIL import Image
 from torch.utils.data import Dataset
 from torchvision.transforms import Compose, Normalize, Resize, ToTensor
 
+import pdb
 
 def anime_read(filename):
     f = open(filename, "rb")
@@ -504,6 +505,7 @@ class PointCloud(Dataset):
         self.cfg = cfg
         if is_mesh:
             if cfg.strategy == "save_pc":
+                # pdb.set_trace()
                 obj: trimesh.Trimesh = trimesh.load(path)
                 vertices = obj.vertices
                 vertices -= np.mean(vertices, axis=0, keepdims=True)

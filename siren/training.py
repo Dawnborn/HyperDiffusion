@@ -12,6 +12,7 @@ from torch.optim.lr_scheduler import LambdaLR, ReduceLROnPlateau, StepLR
 from torch.utils.tensorboard import SummaryWriter
 from tqdm.autonotebook import tqdm
 
+import pdb
 
 def train(
     model,
@@ -89,6 +90,7 @@ def train(
             total_loss, total_items = 0, 0
 
             for step, (model_input, gt) in enumerate(train_dataloader):
+                # pdb.set_trace()
                 start_time = time.time()
 
                 model_input = {key: value.cuda() for key, value in model_input.items()}

@@ -11,6 +11,8 @@ import torch
 import trimesh
 from omegaconf import DictConfig, open_dict
 
+import pdb
+from tqdm import tqdm
 import wandb
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -48,6 +50,7 @@ def get_model(cfg):
     config_name="overfit_plane",
 )
 def main(cfg: DictConfig):
+    # cfg.strategy="save_pc"
     wandb.init(
         project="hyperdiffusion_overfitting",
         dir=cfg.wandb_dir,
@@ -87,16 +90,17 @@ def main(cfg: DictConfig):
     lengths = []
     names = []
     train_object_names = np.genfromtxt(
-        os.path.join(cfg.dataset_folder, "train_split.lst"), dtype="str"
+        os.path.join(cfg.split_root, "train_split.lst"), dtype="str"
     )
     train_object_names = set(train_object_names)
-    for i, file in enumerate(files):
+    # pdb.set_trace()
+    for i, file in tqdm(enumerate(files)):
         # We used to have mesh jittering for augmentation but not using it anymore
         for j in range(10 if mesh_jitter and i > 0 else 1):
             # Quick workaround to rename from obj to off
             # if file.endswith(".obj"):
             #     file = file[:-3] + "off"
-
+            # pdb.set_trace()
             if not (file in train_object_names):
                 print(f"File {file} not in train_split")
                 continue
@@ -108,9 +112,9 @@ def main(cfg: DictConfig):
                 os.path.join(cfg.dataset_folder, file),
                 on_surface_points=cfg.batch_size,
                 is_mesh=True,
-                output_type=cfg.output_type,
+                output_type=cfg.output_type, # occ
                 out_act=cfg.out_act,
-                n_points=cfg.n_points,
+                n_points=cfg.n_points, # 100000
                 cfg=cfg,
             )
             dataloader = DataLoader(
@@ -125,6 +129,7 @@ def main(cfg: DictConfig):
 
             # Define the model.
             model = get_model(cfg).cuda()
+            # pdb.set_trace()
 
             # Define the loss
             loss_fn = loss_functions.sdf
@@ -167,6 +172,7 @@ def main(cfg: DictConfig):
             ):
                 print("loaded")
                 model.load_state_dict(first_state_dict)
+            # pdb.set_trace()
 
             training.train(
                 model=model,
