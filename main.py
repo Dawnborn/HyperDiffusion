@@ -78,6 +78,7 @@ def main(cfg: DictConfig):
         ).float()
 
     dataset_path = os.path.join(Config.config["dataset_dir"], Config.config["dataset"])
+    train_split_path = os.path.join(Config.config["split_root"], Config.config["dataset"])
     train_object_names = np.genfromtxt(
         os.path.join(dataset_path, "train_split.lst"), dtype="str"
     )
@@ -253,7 +254,7 @@ def main(cfg: DictConfig):
         accelerator="gpu",
         devices=torch.cuda.device_count(),
         max_epochs=Config.get("epochs"),
-        strategy="ddp",
+        # strategy="ddp", # OUT OF MEM
         logger=wandb_logger,
         default_root_dir=checkpoint_path,
         callbacks=[

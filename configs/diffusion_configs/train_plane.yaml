@@ -7,6 +7,7 @@ filter_bad_path: ./data/plane_problematic_shapes.txt
 disable_wandb: False
 dataset_dir: ./data
 dataset: 02691156
+split_root: "./data/short_split"
 tensorboard_log_dir: .
 augment: False
 augment_amount: 0
@@ -18,12 +19,12 @@ scheduler: True
 scheduler_step: 200
 best_model_save_path:
 mode: train
-mlps_folder_train: ./mlp_weights/3d_128_plane_multires_4_manifoldplus_slower_no_clipgrad
+mlps_folder_train: logs/insert_name_here
 model_resume_path:
 sampling: ddim
 val_fid_calculation_period: 15
 lr: 0.0002
-batch_size: 16
+batch_size: 1
 accumulate_grad_batches: 1
 val:
   num_points: 2048

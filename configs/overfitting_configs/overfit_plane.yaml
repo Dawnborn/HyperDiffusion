@@ -6,7 +6,7 @@ mesh_jitter: False
 split_root: "./data/02691156"
 dataset_folder: "./data/ShapeNet_processed/02691156"
 wandb_dir: .
-batch_size: 2048
+batch_size: 4096
 lr: 1e-2
 model_type: mlp_3d
 bayesian: False
