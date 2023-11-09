@@ -55,20 +55,22 @@ def main():
     p.add_argument(
         "--experiment_name",
         type=str,
-        required=True,
+        default='insert_name_here_newply',
         help="Name of subdirectory in logging_root where summaries and checkpoints will be saved.",
     )
 
     # General training options
     p.add_argument("--batch_size", type=int, default=16384)
     p.add_argument(
-        "--checkpoint_path", default=None, help="Checkpoint to trained model."
+        "--checkpoint_path", 
+        default='logs/insert_name_here/occ_1a9b552befd6306cc8f2d5fe7449af61_jitter_0_model_final.pth', 
+        help="Checkpoint to trained model."
     )
 
     p.add_argument(
         "--model_type",
         type=str,
-        default="sine",
+        default="mlp_3d",
         help='Options are "sine" (all sine activations) and "mixed" (first layer sine, other layers tanh)',
     )
     p.add_argument(
